@@ -148,7 +148,9 @@ float PopoverViewDegreesToRadians(float angle)
     if (_arrowStyle == PopoverViewArrowStyleTriangle) {
         arrowWidth = 22.0;
     }
-    
+    if (!_showArrows) {
+        cornerRadius = 0.f;
+    }
     // 如果箭头指向的点过于偏左或者过于偏右则需要重新调整箭头 x 轴的坐标
     CGFloat minHorizontalEdge = kPopoverViewMargin + cornerRadius + arrowWidth/2 + 2;
     if (toPoint.x < minHorizontalEdge) {
