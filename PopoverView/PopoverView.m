@@ -3,9 +3,9 @@
 #import "PopoverView.h"
 #import "PopoverViewCell.h"
 
-static CGFloat const kPopoverViewMargin = 8.f;        ///< 边距
+static CGFloat  kPopoverViewMargin = 8.f;        ///< 边距
 static CGFloat const kPopoverViewCellHeight = 40.f;   ///< cell指定高度
-static CGFloat const kPopoverViewArrowHeight = 13.f;  ///< 箭头高度
+static CGFloat  kPopoverViewArrowHeight = 13.f;  ///< 箭头高度
 
 static NSString *kPopoverCellReuseId = @"_PopoverCellReuseId";
 
@@ -91,6 +91,7 @@ float PopoverViewDegreesToRadians(float angle)
     // data
     _actions = @[];
     _isUpward = YES;
+    _showArrows = YES;
     _style = PopoverViewStyleDefault;
     _arrowStyle = PopoverViewArrowStyleRound;
     
@@ -165,6 +166,7 @@ float PopoverViewDegreesToRadians(float angle)
     }
     
     // 箭头高度
+    
     currentH += kPopoverViewArrowHeight;
     
     // 限制最高高度, 免得选项太多时超出屏幕
@@ -371,6 +373,11 @@ float PopoverViewDegreesToRadians(float angle)
 
 - (void)showToView:(UIView *)pointView withActions:(NSArray<PopoverAction *> *)actions
 {
+    if (self.showArrows) {
+        kPopoverViewArrowHeight = 13;
+    }else{
+        kPopoverViewArrowHeight = 0;
+    }
     // 判断 pointView 是偏上还是偏下
     CGRect pointViewRect = [pointView.superview convertRect:pointView.frame toView:_keyWindow];
     CGFloat pointViewUpLength = CGRectGetMinY(pointViewRect);
@@ -383,7 +390,12 @@ float PopoverViewDegreesToRadians(float angle)
     }
     // 弹窗在 pointView 底部
     else {
-        toPoint.y = CGRectGetMaxY(pointViewRect) + 5;
+        if (self.showArrows) {
+            toPoint.y = CGRectGetMaxY(pointViewRect) + 5;
+        }else{
+            toPoint.y = CGRectGetMaxY(pointViewRect);
+        }
+        
     }
     
     // 箭头指向方向
