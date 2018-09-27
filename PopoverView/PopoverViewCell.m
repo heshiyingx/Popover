@@ -91,6 +91,9 @@ float const PopoverViewCellTitleLeftEdge = 8.f; ///< 标题左边边距
     [_button setImage:action.image forState:UIControlStateNormal];
     [_button setTitle:action.title forState:UIControlStateNormal];
     _button.titleEdgeInsets = action.image ? UIEdgeInsetsMake(0, PopoverViewCellTitleLeftEdge, 0, -PopoverViewCellTitleLeftEdge) : UIEdgeInsetsZero;
+    if (action.isCurrent&&action.currentColor) {
+        [_button setTitleColor:action.currentColor forState:UIControlStateNormal];
+    }
 }
 
 - (void)showBottomLine:(BOOL)show {
