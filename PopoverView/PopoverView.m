@@ -386,8 +386,10 @@ float PopoverViewDegreesToRadians(float angle)
 {
     if (self.showArrows) {
         kPopoverViewArrowHeight = 13;
+        kPopoverViewMargin = 8;
     }else{
         kPopoverViewArrowHeight = 0;
+        kPopoverViewMargin = 0;
     }
     // 判断 pointView 是偏上还是偏下
     CGRect pointViewRect = [pointView.superview convertRect:pointView.frame toView:_keyWindow];
