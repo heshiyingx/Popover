@@ -203,7 +203,6 @@ float PopoverViewDegreesToRadians(float angle)
     }
     
     self.frame = CGRectMake(currentX, currentY, currentW, currentH);
-    self.backgroundColor = [UIColor redColor];
     
     // 截取箭头
     CGPoint arrowPoint = CGPointMake(toPoint.x - CGRectGetMinX(self.frame), _isUpward ? 0 : currentH); // 箭头顶点在当前视图的坐标
