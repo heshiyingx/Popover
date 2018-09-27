@@ -20,6 +20,11 @@ typedef NS_ENUM(NSUInteger, PopoverViewArrowStyle) {
  是否显示阴影, 如果为YES则弹窗背景为半透明的阴影层, 否则为透明, 默认为NO.
  */
 @property (nonatomic, assign) BOOL showShade;
+
+/**
+ 是否显示阴影, 如果为YES则弹窗以下背景为半透明的阴影层, 否则为透明, 默认为NO.
+ */
+@property (nonatomic, assign) BOOL showSubShade;
 /**
  是否显示三角
  */

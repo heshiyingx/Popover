@@ -20,6 +20,7 @@ float PopoverViewDegreesToRadians(float angle)
 @property (nonatomic, weak) UIWindow *keyWindow;                ///< 当前窗口
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *shadeView;                ///< 遮罩层
+@property (nonatomic, strong) UIView *shade_sub_View;                ///< 第二遮罩层
 @property (nonatomic, weak) CAShapeLayer *borderLayer;          ///< 边框Layer
 @property (nonatomic, weak) UITapGestureRecognizer *tapGesture; ///< 点击背景阴影的手势
 
@@ -47,6 +48,7 @@ float PopoverViewDegreesToRadians(float angle)
     
     _tableView.frame = CGRectMake(0, _isUpward ? kPopoverViewArrowHeight : 0,
                                   CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - kPopoverViewArrowHeight);
+    _shade_sub_View.frame = CGRectMake(0, self.frame.origin.y,[UIScreen mainScreen].bounds.size.width,[UIScreen mainScreen].bounds.size.height-self.frame.origin.y);
 }
 
 #pragma mark - Setter
@@ -67,7 +69,10 @@ float PopoverViewDegreesToRadians(float angle)
         _borderLayer.strokeColor = _showShade ? [UIColor clearColor].CGColor : _tableView.separatorColor.CGColor;
     }
 }
-
+- (void)setShowSubShade:(BOOL)showSubShade{
+    _showSubShade = showSubShade;
+    _shade_sub_View.backgroundColor  = _showSubShade ? [UIColor colorWithWhite:0.f alpha:0.3f] : [UIColor clearColor];
+}
 - (void)setStyle:(PopoverViewStyle)style
 {
     _style = style;
@@ -105,7 +110,11 @@ float PopoverViewDegreesToRadians(float angle)
     
     // shadeView
     _shadeView = [[UIView alloc] initWithFrame:_keyWindow.bounds];
+    _shade_sub_View = [[UIView alloc] init];
+    _shade_sub_View.backgroundColor = [UIColor clearColor];
+    [_shadeView addSubview:_shade_sub_View];
     [self setShowShade:NO];
+     [self setShowSubShade:NO];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
     [_shadeView addGestureRecognizer:tapGesture];
     _tapGesture = tapGesture;
@@ -194,6 +203,7 @@ float PopoverViewDegreesToRadians(float angle)
     }
     
     self.frame = CGRectMake(currentX, currentY, currentW, currentH);
+    self.backgroundColor = [UIColor redColor];
     
     // 截取箭头
     CGPoint arrowPoint = CGPointMake(toPoint.x - CGRectGetMinX(self.frame), _isUpward ? 0 : currentH); // 箭头顶点在当前视图的坐标
